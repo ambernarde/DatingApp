@@ -7,6 +7,7 @@ import { authGuard } from './_guards/auth.guard';
 import { TestErrorsComponent } from './errors/test-errors/test-errors.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
 
 export const routes: Routes = [
   {path: '', component:HomeComponent},
@@ -15,8 +16,8 @@ export const routes: Routes = [
     runGuardsAndResolvers:'always',
     canActivate:[authGuard],
     children:[
-      {path: 'members', component:MemberDetailComponent },
-      {path: 'members/:id', component:MemberDetailComponent},
+      {path: 'members', component:MemberListComponent },
+      {path: 'members/:username', component: MemberDetailComponent},
       {path: 'lists', component:ListsComponent},
       {path: 'messages', component:MessagesComponent},
     ]
