@@ -81,8 +81,19 @@ initializeUploader(){
     const photo = JSON.parse(response);
     const updateMember = {...this.member()}
     updateMember.photos.push(photo);
-    this.memberChange.emit(updateMember);
-
+    if(photo.isMain){
+      const user = this.accountService.currentUser();
+      if(user){
+        user.photoUrl = photo.url;
+        this.accountService.setCurrentUser(user)
+      }
+      updateMember.photoUrl = photo.url;
+      updateMember.photos.forEach(p => {
+        if(p.isMain) p.isMain = false;
+        if(p.id === photo.id) p.isMain = true;
+      });
+      this.memberChange.emit(updateMember);
+    }
   }
 }
 
